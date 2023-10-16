@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js"></script>
+    <script src="meldinger.js"></script>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+          <h3>X</h3>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="./index.html">Hjem</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./Feedside.html">Feedside</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href=":/meldinger.html">Profile</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="post-container">
+        <h2>Enter Post ID:</h2>
+        <img src="/images/id.png" alt="" />
+        <input type="text" id="postID" onkeyup="searchOnEnter(event)" />
+        <button onclick="viewPost()">View Post</button>
+      </div>
+
+      <div id="postContent"></div>
+    </div>
+
+    <script>
+      const posts = [
+        { id: 1, title: "Post 1", content: "Content of Post 1" },
+        { id: 2, title: "Post 2", content: "Content of Post 2" },
+        { id: 3, title: "Post 3", content: "Content of Post 3" },
+      ];
+
+      function viewPost() {
+        const postID = document.getElementById("postID").value;
+        const postContent = document.getElementById("postContent");
+        const post = posts.find((post) => post.id == postID);
+
+        if (post) {
+          postContent.innerHTML = `
+                  <div class="post-box">
+                      <h2>${post.title}</h2>
+                      <p>${post.content}</p>
+                  </div>
+              `;
+        } else {
+          postContent.innerHTML = " Nasrudin id.";
+        }
+      }
+
+      function searchOnEnter(event) {
+        if (event.keyCode === 13) {
+          const searchTerm = document
+            .getElementById("postID")
+            .value.toLowerCase();
+          const postsMatchingTerm = posts.filter((post) =>
+            post.content.toLowerCase().includes(searchTerm)
+          );
+          const postContent = document.getElementById("postContent");
+
+          if (postsMatchingTerm.length > 0) {
+            postContent.innerHTML = "";
+            postsMatchingTerm.forEach((post) => {
+              postContent.innerHTML += `
+                          <div class="post-box">
+                              <h2>${post.title}</h2>
+                              <p>${post.content}</p>
+                          </div>
+                      `;
+            });
+          } else {
+            postContent.innerHTML = "Nasrudin Id";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
